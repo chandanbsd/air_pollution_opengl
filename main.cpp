@@ -12,13 +12,13 @@ double var = -6;
 double rainX = -6;
 double rainY;
 bool Rain = false;
-bool night = false;
 
 
 //colors  variables
 
 double sky[3] = {19,190,242};
-double cloud[3] = {58,51,39};
+double cloud[3] = {255,255,255};
+double smoke[3] = {58,51,39};
 double sun[3] = {219,230,21};
 double road[3]={0,0,0};
 double soil[3] = {199,192,141};
@@ -34,10 +34,10 @@ double train = 0;
 double car1 = 0;
 double car2 = 0;
 double fly = 0;
-float ship = 0.0f;
+float ship = 1.3f;
 float ship2 = 0.0f;
 double rain = 0;
-
+int revf = 0;
 
 
 void drawCloud(){
@@ -45,6 +45,14 @@ void drawCloud(){
     glScalef(1,0.4,1);
     glTranslatef(-0.1,0,0);glBegin(GL_POLYGON);
     glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glutSolidSphere(0.7,40,40);
+}
+
+void drawSmoke(){
+    glutSolidSphere(0.4,40,40);
+    glScalef(1,0.4,1);
+    glTranslatef(-0.1,0,0);glBegin(GL_POLYGON);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glutSolidSphere(0.7,40,40);
 }
 
@@ -599,8 +607,10 @@ void drawPlane(){
 
 }
 
+
 void DrawHouse()
 {
+
 
     //--------------Upper Triangle-----------------
     glPushMatrix();
@@ -682,11 +692,11 @@ void DrawHouse()
     glEnd();
     glPopMatrix();
 
-    //smoke
+    //smoke{58,51,39};
     glPushMatrix();
     glTranslatef(-0.4, 0.5, 1);
     glScalef(1.4, 1.4, 0.01);
-	glColor3ub(171,171,171);
+	glColor3ub(58,51,39);
     //glColor3f(50, 38, 25);
     glutSolidSphere(0.1, 20, 20);
     glPopMatrix();
@@ -695,10 +705,11 @@ void DrawHouse()
     glPushMatrix();
     glTranslatef(-0.1, 0.8, 1);
     glScalef(2, 2, 0.01);
-   glColor3ub(171,171,171);
+   glColor3ub(58,51,39);
     glutSolidSphere(0.1, 20, 20);
     glPopMatrix();
     //---------------------------------------------
+
 }
 
 int  d, x, y;
@@ -1423,66 +1434,66 @@ void drawScene() {
 
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(0,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(-1.2,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(-3.15,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(-2.15,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(-4.15,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(-3.7,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(2,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(3,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 	//smokeys
 	glPushMatrix();
-    glColor3ub(cloud[0], cloud[1], cloud[2]);
+    glColor3ub(smoke[0], smoke[1], smoke[2]);
     glTranslatef(4,car1,0);
-    drawCloud();
+    drawSmoke();
     glPopMatrix();
 	//smokey
 
@@ -1612,7 +1623,7 @@ void drawScene() {
 
      //ship 1
     glPushMatrix();
-     glTranslatef(ship,0,0);
+    glTranslatef(ship,0,0);
     glTranslatef(-1,-1.5,2);
     glScalef(0.05,0.05,1);
     drawBoat();
@@ -1626,15 +1637,8 @@ void drawScene() {
     draw_circle(495, 235, 6);
     glEnd();
 
-    //ship 2
-    glPushMatrix();
-    glTranslatef(ship2,0.5,0);
-    glTranslatef(3,-1.5,2);
-    glScalef(0.05,0.05,1);
-    drawBoat();
-    glPopMatrix();
 
- if(Rain && !night){
+	 if(Rain){
 
         //rain
         glPushMatrix();
@@ -1645,8 +1649,6 @@ void drawScene() {
 
 
     }
-
-
 
     glPushMatrix();
     glTranslatef(ship, 0, 0);
@@ -1797,29 +1799,28 @@ void flyAnimation(int value) {
     glutTimerFunc(25, flyAnimation, 0);
 }
 
-void shipAnimation(int value) {
+void shipAnimation(int value) 
+{
 
+	if(ship >= 4.0f)
+		revf = 1;
 
-    ship = ship + 0.005f;
+    if(ship < 0.0f)
+    	revf = 0;
 
+    if (revf == 0)
+   		ship = ship + 0.04f;
+   
+    else
+    	ship = ship - 0.04f;
+    
 
     glutPostRedisplay();
     glutTimerFunc(25, shipAnimation, 0);
+
 }
 
-void shipAnimation2(int value) {
 
-
-    if(ship2 <= -3.2){
-        return;
-    }else{
-        ship2 -= 0.005f;
-    }
-
-    glutPostRedisplay();
-
-    glutTimerFunc(25, shipAnimation2, 0);
-}
 
 void rainAnimation(int value) {
 
@@ -1840,8 +1841,7 @@ void keyboard(unsigned char key, int x, int y)
 {
     switch (key) {
         case 'r':
-            Rain = true;
-            if(!night){
+            	Rain = true;
                 sky[0] = 128;
                 sky[1] = 137;
                 sky[2] = 140;
@@ -1854,7 +1854,7 @@ void keyboard(unsigned char key, int x, int y)
 				 water[0] = 102;
                 water[1] = 126;
                 water[2] = 44;
-            }
+            
 
 
             break;
@@ -1863,9 +1863,9 @@ void keyboard(unsigned char key, int x, int y)
                 sky[0] = 19;
                 sky[1] = 190;
                 sky[2] = 242;
-                cloud[0] = 58;
-                cloud[1] = 51;
-                cloud[2] = 39;
+                cloud[0] = 255;
+                cloud[1] = 255;
+                cloud[2] = 255;
                 sun[0] = 219;
                 sun[1] = 230;
                 sun[2] = 21;
@@ -1909,7 +1909,6 @@ int main(int argc, char** argv) {
     glutTimerFunc(25, carAnimation1, 0); //Add a timer
     glutTimerFunc(25, flyAnimation, 0); //Add a timer
     glutTimerFunc(25, shipAnimation, 0);
-    glutTimerFunc(25, shipAnimation2, 0);
     glutTimerFunc(25, rainAnimation, 0);
     glutKeyboardFunc(keyboard);  //sets the keyboard callback for the current window.
 
