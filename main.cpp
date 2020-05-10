@@ -7,15 +7,13 @@
 #define PI 3.14159265
 #define CTRL_COUNT 100
 
-
-double var = -6;
-double rainX = -6;
-double rainY;
-bool Rain = false;
+using namespace std;
 
 
-//colors  variables
 
+
+
+// Colors in RGB Scheme
 double sky[3] = {19,190,242};
 double cloud[3] = {255,255,255};
 double smoke[3] = {58,51,39};
@@ -28,8 +26,7 @@ double building2[3] = {100,0,70};
 double building1Box2[3] = {110,67,187};
 double building1Box3[3] = {250,105,179};
 
-using namespace std;
-
+//Variable Declarations
 double train = 0;
 double car1 = 0;
 double car2 = 0;
@@ -38,9 +35,16 @@ float ship = 1.3f;
 float ship2 = 0.0f;
 double rain = 0;
 int revf = 0;
+double var = -6;
+double rainX = -6;
+double rainY;
+bool Rain = false;
 
 
-void drawCloud(){
+// Functions to draw a 2D object
+
+void drawCloud()
+{
     glutSolidSphere(0.4,40,40);
     glScalef(1,0.4,1);
     glTranslatef(-0.1,0,0);glBegin(GL_POLYGON);
@@ -48,7 +52,8 @@ void drawCloud(){
     glutSolidSphere(0.7,40,40);
 }
 
-void drawSmoke(){
+void drawSmoke()
+{
     glutSolidSphere(0.4,40,40);
     glScalef(1,0.4,1);
     glTranslatef(-0.1,0,0);glBegin(GL_POLYGON);
@@ -58,8 +63,8 @@ void drawSmoke(){
 
 
 
- void drawRoad(){
-
+ void drawRoad()
+ {
      //draw road
     glPushMatrix();
     glTranslatef(0,-0.15,-0.25);
@@ -158,7 +163,6 @@ void drawSmoke(){
 
 
     glPopMatrix();
-
 }
 
 void drawRailTrack(){
@@ -191,6 +195,7 @@ void drawRailTrack(){
     var = -6;
 
 }
+
 void drawTrain(){
 
     //body
@@ -338,6 +343,7 @@ void drawTrain(){
 
 
 }
+
 void wheel(float k,float m,float rad){
     glBegin(GL_POLYGON);
     for(int i=0;i<200;i++)
@@ -750,6 +756,8 @@ void drawBoat(){
 
 
 
+
+
      //2nd box
     glColor3f(0.0,0.0,0.387);
     glBegin(GL_POLYGON);
@@ -758,6 +766,9 @@ void drawBoat(){
     glVertex2f(19.5,8.5);
     glVertex2f(19.5,5.5);
     glEnd();
+
+
+
 
 
    //3rd box
@@ -1041,18 +1052,7 @@ void drawBoat(){
 
 }
 
-void drawBird(){
-    glPushMatrix();
-    glBegin(GL_LINES);
-    glColor3f(0, 1, 0.2);
-    glVertex3f(0,0,0);
-    glVertex3f(1, 0.5, 0);
-    glVertex3f(1, 0.5, 0);
-    glVertex3f(0, 1, 0);
-    glEnd();
-    glPopMatrix();
 
-}
 
 void drawRain(){
 
@@ -1262,6 +1262,167 @@ float _angle = 0.0;
 //float _cameraAngle = 0.0;
 //float _ang_tri = 0.0;
 
+
+
+void update(int value){
+
+
+
+    glutPostRedisplay(); //Tell GLUT that the display has changed
+
+    //Tell GLUT to call update again in 25 milliseconds
+    glutTimerFunc(25, update , 0);
+}
+
+void trainAnimation(int value) {
+
+     train += 0.35f;
+    if(train>50.0f){
+        train = -20.0f;
+    }
+
+    glutPostRedisplay();
+
+    glutTimerFunc(25, trainAnimation, 0);
+}
+
+void carAnimation1(int value) {
+
+
+    car1 += 0.03f;
+    if(car1>10.0f){
+        car1 = -5.0f;
+    }
+
+    glutPostRedisplay();
+
+    glutTimerFunc(25, carAnimation1, 0);
+}
+
+
+void flyAnimation(int value) {
+
+
+    fly += 0.04f;
+    if(fly>25.0f){
+        //move=true;
+        fly = -10.0f;
+    }
+
+    glutPostRedisplay();
+
+    glutTimerFunc(25, flyAnimation, 0);
+}
+
+void shipAnimation(int value) 
+{
+
+	if(ship >= 4.0f)
+		revf = 1;
+
+    if(ship < 0.0f)
+    	revf = 0;
+
+    if (revf == 0)
+   		ship = ship + 0.04f;
+   
+    else
+    	ship = ship - 0.04f;
+    
+
+    glutPostRedisplay();
+    glutTimerFunc(25, shipAnimation, 0);
+
+}
+
+
+
+void rainAnimation(int value) {
+
+
+    rain += 0.02f;
+    if(rain>0.1f){
+        //move=true;
+        rain = -0.1f;
+    }
+
+
+    glutPostRedisplay();
+
+    glutTimerFunc(25, rainAnimation, 0);
+}
+
+
+
+
+void keyboard(unsigned char key, int x, int y)
+{
+    switch (key) {
+        case 'r':
+        		
+            	Rain = true;
+                sky[0] = 128;
+                sky[1] = 137;
+                sky[2] = 140;
+                cloud[0] = 40;
+                cloud[1] = 49;
+                cloud[2] = 17;
+                sun[0] = 128;
+                sun[1] = 137;
+                sun[2] = 140;
+				 water[0] = 102;
+                water[1] = 126;
+                water[2] = 44;
+            
+
+
+            break;
+            case 'd':
+            
+			 Rain = false;
+                sky[0] = 19;
+                sky[1] = 190;
+                sky[2] = 242;
+                cloud[0] = 255;
+                cloud[1] = 255;
+                cloud[2] = 255;
+                sun[0] = 219;
+                sun[1] = 230;
+                sun[2] = 21;
+                soil[0] = 199;
+                soil[1] = 192;
+                soil[2] = 141;
+                water[0] = 152;
+                water[1] = 222;
+                water[2] = 245;
+                break;
+
+    }
+}
+
+void drawtext(char *s)
+	{ 
+		glColor3f(1.0f, 0.0f, 0.0f); 
+		glRasterPos2f(0.0f,0.0f);
+		int j=0;
+		while(s[j]!='\0')
+		{
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, s[j]);
+			j++;
+		}
+	}
+
+void textRedraw(int value)
+{	
+	if(rain == true)
+		{
+			drawtext("Before Pollution");
+		}
+	else{}	
+	drawtext("After Pollution");
+}
+
+
 //Draws the 3D scene
 void drawScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //The glClear function clears buffers to preset values.
@@ -1369,13 +1530,13 @@ void drawScene() {
 
 
 
-         //road
+    //road
     glPushMatrix();
     drawRoad();
     glPopMatrix();
 
 
-      //Rail Track
+    //Rail Track
     glPushMatrix();
     glTranslated(0,0.06,0);
     drawRailTrack();
@@ -1579,6 +1740,7 @@ void drawScene() {
     drawPlane();
     glPopMatrix();
 
+
     //house 1
     glPushMatrix();
     glTranslatef(-1.2,-0.9,0.5);
@@ -1650,77 +1812,7 @@ void drawScene() {
 
     }
 
-    glPushMatrix();
-    glTranslatef(ship, 0, 0);
-    glTranslatef(0, 2, 0);
 
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(0, 0, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.1, 0, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.1, 0.1, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.1, -0.1, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.2, -0.1, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.2, -0.2, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.2, 0, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.2, 0.1, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-
-
-
-    //draw Bird
-    glPushMatrix();
-    glTranslatef(-0.2, 0.2, 1);
-    glScalef(0.05, 0.05, 1);
-    drawBird();
-    glPopMatrix();
-
-    glPopMatrix();
 
    //water circle
     glPushMatrix();
@@ -1741,152 +1833,11 @@ void drawScene() {
    */
 
 
-
-
-
-
+    glPushMatrix();
+    drawtext("Before Pollution");
+    glPopMatrix();
 
     glutSwapBuffers();  //swaps the buffers of the current window if double buffered
-}
-
-void update(int value){
-
-
-
-    glutPostRedisplay(); //Tell GLUT that the display has changed
-
-    //Tell GLUT to call update again in 25 milliseconds
-    glutTimerFunc(25, update , 0);
-}
-
-void trainAnimation(int value) {
-
-     train += 0.35f;
-    if(train>50.0f){
-        train = -20.0f;
-    }
-
-    glutPostRedisplay();
-
-    glutTimerFunc(25, trainAnimation, 0);
-}
-
-void carAnimation1(int value) {
-
-
-    car1 += 0.03f;
-    if(car1>10.0f){
-        car1 = -5.0f;
-    }
-
-    glutPostRedisplay();
-
-    glutTimerFunc(25, carAnimation1, 0);
-}
-
-
-void flyAnimation(int value) {
-
-
-    fly += 0.04f;
-    if(fly>25.0f){
-        //move=true;
-        fly = -10.0f;
-    }
-
-    glutPostRedisplay();
-
-    glutTimerFunc(25, flyAnimation, 0);
-}
-
-void shipAnimation(int value) 
-{
-
-	if(ship >= 4.0f)
-		revf = 1;
-
-    if(ship < 0.0f)
-    	revf = 0;
-
-    if (revf == 0)
-   		ship = ship + 0.04f;
-   
-    else
-    	ship = ship - 0.04f;
-    
-
-    glutPostRedisplay();
-    glutTimerFunc(25, shipAnimation, 0);
-
-}
-
-
-
-void rainAnimation(int value) {
-
-
-    rain += 0.02f;
-    if(rain>0.1f){
-        //move=true;
-        rain = -0.1f;
-    }
-
-
-    glutPostRedisplay();
-
-    glutTimerFunc(25, rainAnimation, 0);
-}
-
-void keyboard(unsigned char key, int x, int y)
-{
-    switch (key) {
-        case 'r':
-            	Rain = true;
-                sky[0] = 128;
-                sky[1] = 137;
-                sky[2] = 140;
-                cloud[0] = 40;
-                cloud[1] = 49;
-                cloud[2] = 17;
-                sun[0] = 128;
-                sun[1] = 137;
-                sun[2] = 140;
-				 water[0] = 102;
-                water[1] = 126;
-                water[2] = 44;
-            
-
-
-            break;
-            case 'd':
-			 Rain = false;
-                sky[0] = 19;
-                sky[1] = 190;
-                sky[2] = 242;
-                cloud[0] = 255;
-                cloud[1] = 255;
-                cloud[2] = 255;
-                sun[0] = 219;
-                sun[1] = 230;
-                sun[2] = 21;
-                soil[0] = 199;
-                soil[1] = 192;
-                soil[2] = 141;
-                water[0] = 152;
-                water[1] = 222;
-                water[2] = 245;
-                building2[0] = 217;
-                building2[1] = 217;
-                building2[2] = 50;
-                building1Box2[0] = 237;
-                building1Box2[1] = 237;
-                building1Box2[2] = 187;
-                building1Box3[0] = 30;
-                building1Box3[1] = 186;
-                building1Box3[2] = 79;
-                break;
-
-    }
 }
 
 int main(int argc, char** argv) {
@@ -1910,8 +1861,10 @@ int main(int argc, char** argv) {
     glutTimerFunc(25, flyAnimation, 0); //Add a timer
     glutTimerFunc(25, shipAnimation, 0);
     glutTimerFunc(25, rainAnimation, 0);
+    glutTimerFunc(25, textRedraw, 0);
     glutKeyboardFunc(keyboard);  //sets the keyboard callback for the current window.
 
 
     glutMainLoop();
 }
+
