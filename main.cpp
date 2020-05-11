@@ -1401,25 +1401,16 @@ void keyboard(unsigned char key, int x, int y)
 }
 
 void drawtext(char *s)
-	{ 
-		glColor3f(1.0f, 0.0f, 0.0f); 
-		glRasterPos2f(0.0f,0.0f);
-		int j=0;
-		while(s[j]!='\0')
-		{
-			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, s[j]);
-			j++;
-		}
+{
+	glColor3f(1.0f, 0.0f, 0.0f); 
+	glRasterPos2f(0.0f,1.0f);
+	int j=0;
+	while(s[j]!='\0')
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, s[j]);
+		j++;
 	}
 
-void textRedraw(int value)
-{	
-	if(rain == true)
-		{
-			drawtext("Before Pollution");
-		}
-	else{}	
-	drawtext("After Pollution");
 }
 
 
@@ -1832,10 +1823,15 @@ void drawScene() {
     glPopMatrix();
    */
 
+    if(Rain == true)
+    {
+        drawtext("After Pollution");
+    }
+    else
+    {   
+        drawtext("Before Pollution");
+    }
 
-    glPushMatrix();
-    drawtext("Before Pollution");
-    glPopMatrix();
 
     glutSwapBuffers();  //swaps the buffers of the current window if double buffered
 }
@@ -1861,7 +1857,6 @@ int main(int argc, char** argv) {
     glutTimerFunc(25, flyAnimation, 0); //Add a timer
     glutTimerFunc(25, shipAnimation, 0);
     glutTimerFunc(25, rainAnimation, 0);
-    glutTimerFunc(25, textRedraw, 0);
     glutKeyboardFunc(keyboard);  //sets the keyboard callback for the current window.
 
 
