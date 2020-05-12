@@ -1413,13 +1413,26 @@ void drawtext(char *s)
 
 }
 
+void drawtext2(char *s)
+{
+    glColor3f(1.0f, 0.0f, 0.0f); 
+    glRasterPos2f(1.0f,2.5f);
+    int j=0;
+    while(s[j]!='\0')
+    {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, s[j]);
+        j++;
+    }
+
+}
+
 
 //Draws the 3D scene
 void drawScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //The glClear function clears buffers to preset values.
     glMatrixMode(GL_MODELVIEW); //Switch to the drawing perspective
     glLoadIdentity(); //replaces the current matrix with the identity matrix
-   // glRotatef(-_cameraAngle, 0.0, 1.0, 0.0); //Rotate the camera
+   
     glTranslatef(0.0, 0.0, -7.0); //Move forward 5 units
 
     //Sky
@@ -1814,14 +1827,7 @@ void drawScene() {
      //glutSolidCube(0.5);
     glPopMatrix();
 
-    /*
-    glPushMatrix();
-    glColor3ub(163,147,135);
-    glTranslatef(-1.0,-0.6,1.1);
-    glScalef(4.0,0.15,0.1);
-     glutSolidCube(2.5);
-    glPopMatrix();
-   */
+    drawtext2("Project by CHANDAN B S D & B K PARITOSH");
 
     if(Rain == true)
     {
